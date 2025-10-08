@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Separator } from "./ui/separator";
 
 export function RecentCalls() {
@@ -21,8 +22,8 @@ export function RecentCalls() {
       <h2 className="text-xl font-semibold text-slate-800 mb-4">Recent Calls</h2>
   <div className="flex-1 overflow-y-auto min-h-0" style={{ maxHeight: 'calc(5 * 70px)', overflowY: 'auto' }}>
         {calls.map((call, index) => (
-          <>
-            <div key={index} className="flex items-center justify-between px-3 py-2 rounded-md hover:bg-slate-50 cursor-pointer flex-shrink-0" style={{ height: '60px' }}>
+          <React.Fragment key={index}>
+            <div className="flex items-center justify-between px-3 py-2 rounded-md hover:bg-slate-50 cursor-pointer flex-shrink-0" style={{ height: '60px' }}>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <span className="text-gray-700 font-medium">{`${call.bot} - ${call.industry}`}</span>
                 <div className="flex items-center gap-2 mt-1">
@@ -39,7 +40,7 @@ export function RecentCalls() {
               <span className="text-sm text-slate-500 ml-4">{call.duration}</span>
             </div>
             {index < calls.length - 1 && <Separator className="my-2 bg-gray-200" style={{ height: '2px' }} />}
-          </>
+          </React.Fragment>
         ))}
       </div>
     </div>

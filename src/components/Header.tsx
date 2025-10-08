@@ -1,7 +1,7 @@
 import { Button } from "./ui/button";
 import egenLogo from '../assets/egen_logo.png';
 
-export function Header() {
+export function Header({ onAnalyticsClick }: { onAnalyticsClick?: () => void }) {
   const tabs = ["Dashboard", "Bot Profiles", "Analytics", "Settings"];
   
   return (
@@ -28,9 +28,13 @@ export function Header() {
                   }
                 }
                 if (tab === "Analytics") {
-                  const el = document.getElementById("analytics-section");
-                  if (el) {
-                    el.scrollIntoView({ behavior: "smooth" });
+                  if (onAnalyticsClick) {
+                    onAnalyticsClick();
+                  } else {
+                    const el = document.getElementById("analytics-section");
+                    if (el) {
+                      el.scrollIntoView({ behavior: "smooth" });
+                    }
                   }
                 }
               }}

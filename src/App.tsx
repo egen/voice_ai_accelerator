@@ -4,14 +4,47 @@ import { BotProfiles } from "./components/BotProfiles";
 import { RecentCalls } from "./components/RecentCalls";
 import { AnalyticsSnapshot } from "./components/AnalyticsSnapshot";
 import { QuickTest } from "./components/QuickTest";
+import { CreateBotDialog } from "./components/CreateBotDialog";
+import { StartCallDialog } from "./components/StartCallDialog";
+import { ReportsView } from "./components/ReportsView";
+import { SimpleDialog } from "./components/SimpleDialog";
+import { useState } from "react";
+
+type ViewType = "dashboard" | "reports";
 
 export default function App() {
+
+  const [currentView, setCurrentView] = useState<ViewType>("dashboard");
+  const [createBotOpen, setCreateBotOpen] = useState(false);
+  const [startCallOpen, setStartCallOpen] = useState(false);
+
+  const handleCreateBot = () => {
+    setCreateBotOpen(true);
+  };
+
+  const handleStartCall = () => {
+    setStartCallOpen(true);
+  };
+
+  const handleViewReports = () => {
+    setCurrentView("reports");
+  };
+
+  const handleBackToDashboard = () => {
+    setCurrentView("dashboard");
+  };
+
   return (
   <div className="min-h-screen bg-gray-100" style={{ overflow: 'hidden' }}>
-      <Header />
-      <div className="flex" style={{ height: 'calc(100vh - 56px)' }}>
-        <Sidebar />
+    <Header onAnalyticsClick={handleViewReports} />
+    <div className="flex" style={{ height: 'calc(100vh - 56px)' }}>
+        <Sidebar 
+          onCreateBot={handleCreateBot}
+          onStartCall={handleStartCall}
+          onViewReports={handleViewReports}
+        />
         <main className="flex-1 p-6 overflow-y-auto" style={{ height: '90vh', marginTop: '56px' }}>
+          {currentView === "dashboard" ? (
           <div className="h-full">
             <div className="h-1/2 pb-3 flex gap-6">
               <div className="min-w-0" id="bot-profiles-section" style={{ width: 'calc(60% - 12px)', height: '100%' }}>
@@ -32,8 +65,27 @@ export default function App() {
               </div>
             </div>
           </div>
+          ) : (
+            <ReportsView onBack={handleBackToDashboard} />
+          )}
         </main>
       </div>
+
+      {/* Simple Dialogs */}
+      <SimpleDialog open={createBotOpen} onClose={() => setCreateBotOpen(false)}>
+        <CreateBotDialog 
+          open={createBotOpen} 
+          onOpenChange={setCreateBotOpen} 
+        />
+      </SimpleDialog>
+
+      <SimpleDialog open={startCallOpen} onClose={() => setStartCallOpen(false)}>
+        <StartCallDialog 
+          open={startCallOpen} 
+          onOpenChange={setStartCallOpen} 
+        />
+      </SimpleDialog>
+
       {/* Fixed header styles */}
       <style>{`
         header {
