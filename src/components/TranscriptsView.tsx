@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 import { Badge } from "./ui/badge";
-import { Eye, ChevronLeft, ChevronRight } from "lucide-react";
+import { Eye, ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
 
 interface Transcript {
   id: string;
@@ -17,9 +17,10 @@ interface Transcript {
 
 interface TranscriptsViewProps {
   onViewDetails: (transcript: Transcript) => void;
+  onBack?: () => void;
 }
 
-export function TranscriptsView({ onViewDetails }: TranscriptsViewProps) {
+export function TranscriptsView({ onViewDetails, onBack }: TranscriptsViewProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   
@@ -272,14 +273,23 @@ export function TranscriptsView({ onViewDetails }: TranscriptsViewProps) {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-slate-800">Call Transcripts</h1>
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center space-x-4">
+          <Button
+            variant="outline"
+            onClick={onBack}
+            className="border-slate-300 text-slate-700 hover:bg-slate-100"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Home
+          </Button>
+        </div>
         <div className="text-sm text-slate-600">
           Total: {transcripts.length} transcripts | Page {currentPage} of {totalPages}
         </div>
       </div>
 
-      <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
+      <div className="bg-white rounded-lg border border-slate-200 overflow-hidden" style={{ marginTop: '2%' }}>
         <Table>
           <TableHeader>
             <TableRow className="border-b border-slate-200">

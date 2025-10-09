@@ -80,7 +80,7 @@ export default function App() {
 
   return (
   <div className="min-h-screen bg-gray-100" style={{ overflow: 'hidden' }}>
-    <Header onAnalyticsClick={handleViewReports} onTranscriptsClick={handleViewTranscripts} />
+    <Header onAnalyticsClick={handleViewReports} onTranscriptsClick={handleViewTranscripts} onDashboardClick={handleBackToDashboard} currentView={currentView} />
     <div className="flex" style={{ height: 'calc(100vh - 56px)' }}>
         <Sidebar 
           onCreateBot={handleCreateBot}
@@ -118,7 +118,7 @@ export default function App() {
               onUpdate={handleBotUpdate}
             />
           ) : currentView === "transcripts" ? (
-            <TranscriptsView onViewDetails={handleTranscriptDetails} />
+            <TranscriptsView onViewDetails={handleTranscriptDetails} onBack={handleBackToDashboard} />
           ) : currentView === "transcript-viewer" && selectedTranscript ? (
             <TranscriptViewer 
               transcript={selectedTranscript}
