@@ -1,8 +1,8 @@
 import { Button } from "./ui/button";
 import egenLogo from '../assets/egen_logo.png';
 
-export function Header({ onAnalyticsClick }: { onAnalyticsClick?: () => void }) {
-  const tabs = ["Dashboard", "Bot Profiles", "Analytics", "Settings"];
+export function Header({ onAnalyticsClick, onTranscriptsClick }: { onAnalyticsClick?: () => void; onTranscriptsClick?: () => void }) {
+  const tabs = ["Dashboard", "Bot Profiles", "Analytics", "Transcripts"];
   
   return (
     <header className="bg-slate-900 text-white border-b border-slate-800">
@@ -35,6 +35,11 @@ export function Header({ onAnalyticsClick }: { onAnalyticsClick?: () => void }) 
                     if (el) {
                       el.scrollIntoView({ behavior: "smooth" });
                     }
+                  }
+                }
+                if (tab === "Transcripts") {
+                  if (onTranscriptsClick) {
+                    onTranscriptsClick();
                   }
                 }
               }}

@@ -1,20 +1,94 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { ChevronRight, ChevronDown, Pencil } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useState } from "react";
-import { CreateBotDialog } from "./CreateBotDialog";
-import { SimpleDialog } from "./SimpleDialog";
 
-export function BotProfiles() {
+interface Bot {
+  name: string;
+  status: string;
+  industry: string;
+  model: string;
+  prompts: string;
+  description?: string;
+  apiKey?: string;
+  maxTokens?: number;
+  temperature?: number;
+}
+
+interface BotProfilesProps {
+  onBotSelect?: (bot: Bot) => void;
+}
+
+export function BotProfiles({ onBotSelect }: BotProfilesProps) {
   const [statusFilter, setStatusFilter] = useState("all");
   const [industryFilter, setIndustryFilter] = useState("all");
   
-  const bots = [
-  { name: "Bot A", status: "active", industry: "Healthcare", model: "gemini-live-2.5-flash", prompts: "How can I help you today?" },
-  { name: "Bot B", status: "inactive", industry: "Finance", model: "gemini-live-2.5-flash", prompts: "What financial service do you need?" },
-  { name: "Bot C", status: "active", industry: "Retail", model: "gpt-4", prompts: "Looking for a product?" },
-  { name: "Bot D", status: "active", industry: "Technology", model: "gemini-live-2.5-flash", prompts: "Tech support available." },
-  { name: "Bot E", status: "inactive", industry: "Healthcare", model: "gpt-4", prompts: "Schedule an appointment?" },
-  { name: "Bot F", status: "active", industry: "Finance", model: "llama-3", prompts: "Investment advice?" },
+  const bots: Bot[] = [
+    { 
+      name: "Bot A", 
+      status: "active", 
+      industry: "Healthcare", 
+      model: "gemini-live-2.5-flash", 
+      prompts: "How can I help you today?",
+      description: "Advanced healthcare assistant specialized in patient queries and medical information.",
+      apiKey: "sk-****************************",
+      maxTokens: 2048,
+      temperature: 0.7
+    },
+    { 
+      name: "Bot B", 
+      status: "inactive", 
+      industry: "Finance", 
+      model: "gemini-live-2.5-flash", 
+      prompts: "What financial service do you need?",
+      description: "Financial advisor bot providing investment and banking assistance.",
+      apiKey: "sk-****************************",
+      maxTokens: 1500,
+      temperature: 0.5
+    },
+    { 
+      name: "Bot C", 
+      status: "active", 
+      industry: "Retail", 
+      model: "gpt-4", 
+      prompts: "Looking for a product?",
+      description: "E-commerce assistant helping customers find and purchase products.",
+      apiKey: "sk-****************************",
+      maxTokens: 1800,
+      temperature: 0.8
+    },
+    { 
+      name: "Bot D", 
+      status: "active", 
+      industry: "Technology", 
+      model: "gemini-live-2.5-flash", 
+      prompts: "Tech support available.",
+      description: "Technical support specialist for software and hardware issues.",
+      apiKey: "sk-****************************",
+      maxTokens: 2500,
+      temperature: 0.6
+    },
+    { 
+      name: "Bot E", 
+      status: "inactive", 
+      industry: "Healthcare", 
+      model: "gpt-4", 
+      prompts: "Schedule an appointment?",
+      description: "Medical appointment scheduling and patient care coordinator.",
+      apiKey: "sk-****************************",
+      maxTokens: 1200,
+      temperature: 0.4
+    },
+    { 
+      name: "Bot F", 
+      status: "active", 
+      industry: "Finance", 
+      model: "llama-3", 
+      prompts: "Investment advice?",
+      description: "Investment advisor providing portfolio management and financial planning.",
+      apiKey: "sk-****************************",
+      maxTokens: 2200,
+      temperature: 0.7
+    },
   ];
   
   const filteredBots = bots.filter(bot => {
@@ -23,10 +97,7 @@ export function BotProfiles() {
     return statusMatch && industryMatch;
   });
   
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [editBot, setEditBot] = useState<any | null>(null);
 
-  const [createBotOpen, setCreateBotOpen] = useState(false);
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-6 h-full flex-col" style={{ display: 'flex', flexDirection: 'column' }}>
@@ -58,17 +129,18 @@ export function BotProfiles() {
       
   <div className="flex-1 overflow-y-auto space-y-2 min-h-0" style={{ maxHeight: 'calc(5 * 60px)', minHeight: 'calc(5 * 60px)', overflowY: 'auto' }}>
         {filteredBots.map((bot, index) => (
-          <div key={index} className="border border-gray-200 rounded-md mb-2">
-            <button
-              className="w-full flex items-center justify-between p-3 bg-white hover:bg-slate-50 cursor-pointer"
-              onClick={() => setOpenIndex(openIndex === index ? null : index)}
-              aria-expanded={openIndex === index}
-              aria-controls={`bot-accordion-panel-${index}`}
-              style={{ outline: 'none', border: 'none', background: 'none' }}
-            >
+          <div 
+            key={index} 
+            className="border border-gray-200 rounded-md mb-2 p-3 bg-white hover:bg-slate-50 cursor-pointer transition-colors"
+            onClick={() => onBotSelect?.(bot)}
+          >
+            <div className="flex items-center justify-between">
               <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
-                <span className="text-gray-700 font-medium">{bot.name}</span>
+                <span className="text-gray-700 font-medium hover:text-slate-900">
+                  {bot.name}
+                </span>
                 <span className="text-xs text-gray-500">{bot.industry}</span>
+                <span className="text-xs text-gray-400 mt-1">{bot.model}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div
@@ -79,45 +151,13 @@ export function BotProfiles() {
                     minHeight: '12px'
                   }}
                 ></div>
-                {openIndex === index ? (
-                  <ChevronDown className="w-4 h-4 text-slate-600 transition-transform" />
-                ) : (
-                  <ChevronRight className="w-4 h-4 text-slate-600 transition-transform" />
-                )}
+                <ChevronRight className="w-4 h-4 text-slate-600 transition-transform" />
               </div>
-            </button>
-            {openIndex === index && (
-              <div
-                id={`bot-accordion-panel-${index}`}
-                className="p-4 bg-slate-50 border-t border-gray-200 flex flex-col gap-2"
-                style={{ animation: 'fadeIn 0.2s' }}
-              >
-                <div className="text-sm text-gray-700 mb-2">Industry: <span className="font-medium">{bot.industry}</span></div>
-                <div className="text-sm text-gray-700 mb-2">Model: <span className="font-medium">{bot.model}</span></div>
-                <div className="text-sm text-gray-700">Prompts: <span className="font-medium">{bot.prompts}</span></div>
-                <button
-                  className="mt-2 self-end p-1 bg-slate-900 text-white rounded-full" style={{ borderRadius: '15px', height: '25px' }}
-                  onClick={() => { setEditBot(bot); setCreateBotOpen(true); }}
-                >
-                  <Pencil className="w-4 h-4" />
-                </button>
-              </div>
-            )}
+            </div>
           </div>
         ))}
       </div>
-    {/* CreateBotDialog integration */}
-    {editBot && (
-      <SimpleDialog open={createBotOpen} onClose={() => setCreateBotOpen(false)}>
-        <CreateBotDialog
-          open={!!editBot}
-          onOpenChange={(open: boolean) => {
-            if (!open) setEditBot(null);
-          }}
-          initialValues={editBot}
-        />
-      </SimpleDialog>
-    )}
+
     </div>
   );
 }

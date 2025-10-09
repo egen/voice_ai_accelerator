@@ -46,7 +46,7 @@ export function AnalyticsSnapshot() {
             <YAxis hide />
             <Bar 
               dataKey="value" 
-              fill="#0f172a"
+              fill="var(--chart-1)"
               radius={[4, 4, 0, 0]}
               barSize={45}
             />

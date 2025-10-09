@@ -108,7 +108,7 @@ export function ReportsView({ onBack }: ReportsViewProps) {
                         className="border-slate-300 text-slate-700 hover:bg-slate-100"
                     >
                         <ArrowLeft className="w-4 h-4 mr-2" />
-                        Voice AI Analytics Reports
+                        Home
                     </Button>
                 </div>
 
@@ -238,8 +238,8 @@ export function ReportsView({ onBack }: ReportsViewProps) {
                                 <Area
                                     type="monotone"
                                     dataKey="calls"
-                                    stroke="#0f172a"
-                                    fill="#0f172a"
+                                    stroke="var(--chart-1)"
+                                    fill="var(--chart-1)"
                                     fillOpacity={0.1}
                                     strokeWidth={2}
                                 />
@@ -420,7 +420,7 @@ export function ReportsView({ onBack }: ReportsViewProps) {
                                 />
                                 <Bar
                                     dataKey="calls"
-                                    fill="#0f172a"
+                                    fill="var(--chart-1)"
                                     radius={[4, 4, 0, 0]}
                                 />
                             </BarChart>
@@ -456,10 +456,10 @@ export function ReportsView({ onBack }: ReportsViewProps) {
                                 <Line
                                     type="monotone"
                                     dataKey="time"
-                                    stroke="#0f172a"
+                                    stroke="var(--chart-1)"
                                     strokeWidth={3}
-                                    dot={{ fill: "#0f172a", strokeWidth: 2, r: 6 }}
-                                    activeDot={{ r: 8, fill: "#0f172a" }}
+                                    dot={{ fill: "var(--chart-1)", strokeWidth: 2, r: 6 }}
+                                    activeDot={{ r: 8, fill: "var(--chart-1)" }}
                                 />
                             </LineChart>
                         </ResponsiveContainer>

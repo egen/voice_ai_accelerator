@@ -7,16 +7,33 @@ import { QuickTest } from "./components/QuickTest";
 import { CreateBotDialog } from "./components/CreateBotDialog";
 import { StartCallDialog } from "./components/StartCallDialog";
 import { ReportsView } from "./components/ReportsView";
+import { BotDetailView } from "./components/BotDetailView";
+import { TranscriptsView } from "./components/TranscriptsView";
+import { TranscriptViewer } from "./components/TranscriptViewer";
 import { SimpleDialog } from "./components/SimpleDialog";
 import { useState } from "react";
 
-type ViewType = "dashboard" | "reports";
+type ViewType = "dashboard" | "reports" | "bot-detail" | "transcripts" | "transcript-viewer";
+
+interface Bot {
+  name: string;
+  status: string;
+  industry: string;
+  model: string;
+  prompts: string;
+  description?: string;
+  apiKey?: string;
+  maxTokens?: number;
+  temperature?: number;
+}
 
 export default function App() {
 
   const [currentView, setCurrentView] = useState<ViewType>("dashboard");
   const [createBotOpen, setCreateBotOpen] = useState(false);
   const [startCallOpen, setStartCallOpen] = useState(false);
+  const [selectedBot, setSelectedBot] = useState<Bot | null>(null);
+  const [selectedTranscript, setSelectedTranscript] = useState<any | null>(null);
 
   const handleCreateBot = () => {
     setCreateBotOpen(true);
@@ -32,11 +49,38 @@ export default function App() {
 
   const handleBackToDashboard = () => {
     setCurrentView("dashboard");
+    setSelectedBot(null);
+    setSelectedTranscript(null);
+  };
+
+  const handleBotSelect = (bot: Bot) => {
+    setSelectedBot(bot);
+    setCurrentView("bot-detail");
+  };
+
+  const handleBotUpdate = (updatedBot: Bot) => {
+    // Here you would typically update the bot in your data store
+    console.log("Bot updated:", updatedBot);
+    setSelectedBot(updatedBot);
+  };
+
+  const handleViewTranscripts = () => {
+    setCurrentView("transcripts");
+  };
+
+  const handleTranscriptDetails = (transcript: any) => {
+    setSelectedTranscript(transcript);
+    setCurrentView("transcript-viewer");
+  };
+
+  const handleBackToTranscripts = () => {
+    setCurrentView("transcripts");
+    setSelectedTranscript(null);
   };
 
   return (
   <div className="min-h-screen bg-gray-100" style={{ overflow: 'hidden' }}>
-    <Header onAnalyticsClick={handleViewReports} />
+    <Header onAnalyticsClick={handleViewReports} onTranscriptsClick={handleViewTranscripts} />
     <div className="flex" style={{ height: 'calc(100vh - 56px)' }}>
         <Sidebar 
           onCreateBot={handleCreateBot}
@@ -48,7 +92,7 @@ export default function App() {
           <div className="h-full">
             <div className="h-1/2 pb-3 flex gap-6">
               <div className="min-w-0" id="bot-profiles-section" style={{ width: 'calc(60% - 12px)', height: '100%' }}>
-                <BotProfiles />
+                <BotProfiles onBotSelect={handleBotSelect} />
               </div>
               <div className="min-w-0" style={{ width: 'calc(40% - 12px)', height: '100%' }}>
                 <RecentCalls />
@@ -65,9 +109,22 @@ export default function App() {
               </div>
             </div>
           </div>
-          ) : (
+          ) : currentView === "reports" ? (
             <ReportsView onBack={handleBackToDashboard} />
-          )}
+          ) : currentView === "bot-detail" && selectedBot ? (
+            <BotDetailView 
+              bot={selectedBot} 
+              onBack={handleBackToDashboard}
+              onUpdate={handleBotUpdate}
+            />
+          ) : currentView === "transcripts" ? (
+            <TranscriptsView onViewDetails={handleTranscriptDetails} />
+          ) : currentView === "transcript-viewer" && selectedTranscript ? (
+            <TranscriptViewer 
+              transcript={selectedTranscript}
+              onBack={handleBackToTranscripts}
+            />
+          ) : null}
         </main>
       </div>
 
