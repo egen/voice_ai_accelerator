@@ -27,7 +27,7 @@ export function QuickTest() {
                   <span className="block text-xs text-gray-500">Retail</span>
                 </SelectItem>
                 <SelectItem value="bot-d">Bot D
-                  <span className="block text-xs text-gray-500">Technology</span>
+                  <span className="block text-xs text-gray-500">Public Sector</span>
                 </SelectItem>
                 <SelectItem value="bot-e">Bot E
                   <span className="block text-xs text-gray-500">Healthcare</span>

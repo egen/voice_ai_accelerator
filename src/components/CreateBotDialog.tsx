@@ -96,7 +96,7 @@ export function CreateBotDialog({ open, onOpenChange, initialValues }: CreateBot
                             <SelectItem value="Healthcare">Healthcare</SelectItem>
                             <SelectItem value="Finance">Finance</SelectItem>
                             <SelectItem value="Retail">Retail</SelectItem>
-                            <SelectItem value="Technology">Technology</SelectItem>
+                            <SelectItem value="Public Sector">Public Sector</SelectItem>
                             <SelectItem value="Education">Education</SelectItem>
                             <SelectItem value="Real Estate">Real Estate</SelectItem>
                         </SelectContent>

@@ -9,7 +9,7 @@ interface Transcript {
   duration: string;
   status: "unknown" | "answered" | "declined";
   quality: "low" | "medium" | "high";
-  features: ("Recording" | "Speakers" | "Transcript")[];
+  features: ("Recording" | "Transcript")[];
   audioUrl?: string;
   rawData?: any;
 }
@@ -51,9 +51,8 @@ export function TranscriptViewer({ transcript, onBack }: TranscriptViewerProps) 
             className="border-slate-300 text-slate-700 hover:bg-slate-100"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Transcripts
+            Home
           </Button>
-          <h1 className="text-2xl font-semibold text-slate-800">Transcript Viewer</h1>
         </div>
       </div>
 

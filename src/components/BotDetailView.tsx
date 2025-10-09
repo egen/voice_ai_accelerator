@@ -83,7 +83,6 @@ export function BotDetailView({ bot, onBack, onUpdate }: BotDetailViewProps) {
             <ArrowLeft className="w-4 h-4 mr-2" />
             Home
           </Button>
-          <h1 className="text-2xl font-semibold text-slate-800">Bot Profile Details</h1>
         </div>
 
         {/* Action Buttons */}
@@ -99,6 +98,8 @@ export function BotDetailView({ bot, onBack, onUpdate }: BotDetailViewProps) {
           </div>
         )}
       </div>
+
+      <div style={{ marginTop: '2%' }}/>
 
       {/* Bot Details Form */}
       <div className="bg-white rounded-lg border border-slate-200 p-6">
@@ -154,7 +155,7 @@ export function BotDetailView({ bot, onBack, onUpdate }: BotDetailViewProps) {
                   <SelectItem value="Healthcare">Healthcare</SelectItem>
                   <SelectItem value="Finance">Finance</SelectItem>
                   <SelectItem value="Retail">Retail</SelectItem>
-                  <SelectItem value="Technology">Technology</SelectItem>
+                  <SelectItem value="Public Sector">Public Sector</SelectItem>
                   <SelectItem value="Education">Education</SelectItem>
                   <SelectItem value="Government">Government</SelectItem>
                 </SelectContent>
@@ -296,7 +297,7 @@ export function BotDetailView({ bot, onBack, onUpdate }: BotDetailViewProps) {
 
       {/* Bottom Action Buttons - Only show in edit mode */}
       {isEditMode && (
-        <div className="flex mt-5 justify-content-end space-x-3 pt-6 border-t border-slate-200" style={{ marginTop: '2%'}}>
+        <div className="flex mt-5 space-x-3 pt-6 border-t border-slate-200" style={{ marginTop: '2%', justifyContent: 'end' }}>
           <Button
             variant="outline"
             onClick={handleCancel}

@@ -23,71 +23,71 @@ export function BotProfiles({ onBotSelect }: BotProfilesProps) {
   const [industryFilter, setIndustryFilter] = useState("all");
   
   const bots: Bot[] = [
-    { 
-      name: "Bot A", 
-      status: "active", 
-      industry: "Healthcare", 
-      model: "gemini-live-2.5-flash", 
+    {
+      name: "HealthCare Assistant",
+      status: "active",
+      industry: "Healthcare",
+      model: "gemini-live-2.5-flash",
       prompts: "How can I help you today?",
       description: "Advanced healthcare assistant specialized in patient queries and medical information.",
       apiKey: "sk-****************************",
       maxTokens: 2048,
       temperature: 0.7
     },
-    { 
-      name: "Bot B", 
-      status: "inactive", 
-      industry: "Finance", 
-      model: "gemini-live-2.5-flash", 
+    {
+      name: "Financial Advisor",
+      status: "inactive",
+      industry: "Finance",
+      model: "gemini-live-2.5-flash",
       prompts: "What financial service do you need?",
       description: "Financial advisor bot providing investment and banking assistance.",
       apiKey: "sk-****************************",
       maxTokens: 1500,
       temperature: 0.5
     },
-    { 
-      name: "Bot C", 
-      status: "active", 
-      industry: "Retail", 
-      model: "gpt-4", 
+    {
+      name: "Retail Assistant",
+      status: "active",
+      industry: "Retail",
+      model: "gpt-4",
       prompts: "Looking for a product?",
       description: "E-commerce assistant helping customers find and purchase products.",
       apiKey: "sk-****************************",
       maxTokens: 1800,
       temperature: 0.8
     },
-    { 
-      name: "Bot D", 
-      status: "active", 
-      industry: "Technology", 
-      model: "gemini-live-2.5-flash", 
-      prompts: "Tech support available.",
-      description: "Technical support specialist for software and hardware issues.",
-      apiKey: "sk-****************************",
-      maxTokens: 2500,
-      temperature: 0.6
-    },
-    { 
-      name: "Bot E", 
-      status: "inactive", 
-      industry: "Healthcare", 
-      model: "gpt-4", 
+    {
+      name: "Medical Scheduler",
+      status: "inactive",
+      industry: "Healthcare",
+      model: "gpt-4",
       prompts: "Schedule an appointment?",
       description: "Medical appointment scheduling and patient care coordinator.",
       apiKey: "sk-****************************",
       maxTokens: 1200,
       temperature: 0.4
     },
-    { 
-      name: "Bot F", 
-      status: "active", 
-      industry: "Finance", 
-      model: "llama-3", 
+    {
+      name: "Investment Advisor",
+      status: "active",
+      industry: "Finance",
+      model: "llama-3",
       prompts: "Investment advice?",
       description: "Investment advisor providing portfolio management and financial planning.",
       apiKey: "sk-****************************",
       maxTokens: 2200,
       temperature: 0.7
+    },
+    {
+      name: "Public Sector Assistant",
+      status: "active",
+      industry: "Public Sector",
+      model: "gpt-4",
+      prompts: "How can I assist with your public service inquiry?",
+      description: "Public sector bot for citizen services, government information, and civic engagement.",
+      apiKey: "sk-****************************",
+      maxTokens: 2000,
+      temperature: 0.6
     },
   ];
   
@@ -122,7 +122,7 @@ export function BotProfiles({ onBotSelect }: BotProfilesProps) {
             <SelectItem value="healthcare">Healthcare</SelectItem>
             <SelectItem value="finance">Finance</SelectItem>
             <SelectItem value="retail">Retail</SelectItem>
-            <SelectItem value="technology">Technology</SelectItem>
+            <SelectItem value="Public Sector">Public Sector</SelectItem>
           </SelectContent>
         </Select>
       </div>

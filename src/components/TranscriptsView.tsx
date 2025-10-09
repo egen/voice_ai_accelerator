@@ -10,7 +10,7 @@ interface Transcript {
   duration: string;
   status: "unknown" | "answered" | "declined";
   quality: "low" | "medium" | "high";
-  features: ("Recording" | "Speakers" | "Transcript" | "Sentiment" | "Intent")[];
+  features: ("Recording" | "Transcript" | "Sentiment" | "Intent")[];
   audioUrl?: string;
   rawData?: any;
 }
@@ -32,7 +32,7 @@ export function TranscriptsView({ onViewDetails, onBack }: TranscriptsViewProps)
       duration: "3:45",
       status: "answered",
       quality: "high",
-      features: ["Recording", "Speakers", "Transcript"],
+      features: ["Recording", "Transcript"],
       audioUrl: "/sample-audio.mp3",
       rawData: {
         id: "TXN-001",
@@ -72,7 +72,7 @@ export function TranscriptsView({ onViewDetails, onBack }: TranscriptsViewProps)
       duration: "5:32",
       status: "answered",
       quality: "low",
-      features: ["Recording", "Speakers"],
+      features: ["Recording"],
       audioUrl: "/sample-audio-3.mp3",
       rawData: {
         id: "TXN-003",
@@ -112,7 +112,7 @@ export function TranscriptsView({ onViewDetails, onBack }: TranscriptsViewProps)
       duration: "4:15",
       status: "answered",
       quality: "medium",
-      features: ["Recording", "Speakers", "Transcript"],
+      features: ["Recording", "Transcript"],
       audioUrl: "/sample-audio-5.mp3",
       rawData: {
         id: "TXN-005",
@@ -132,7 +132,7 @@ export function TranscriptsView({ onViewDetails, onBack }: TranscriptsViewProps)
       duration: "6:22",
       status: "answered",
       quality: "high",
-      features: ["Recording", "Speakers", "Transcript", "Sentiment"],
+      features: ["Recording", "Transcript", "Sentiment"],
       audioUrl: "/sample-audio-6.mp3",
       rawData: {
         id: "TXN-006",
@@ -172,7 +172,7 @@ export function TranscriptsView({ onViewDetails, onBack }: TranscriptsViewProps)
       duration: "7:11",
       status: "answered",
       quality: "medium",
-      features: ["Recording", "Speakers", "Transcript"],
+      features: ["Recording", "Transcript"],
       audioUrl: "/sample-audio-8.mp3",
       rawData: {
         id: "TXN-008",
@@ -212,7 +212,7 @@ export function TranscriptsView({ onViewDetails, onBack }: TranscriptsViewProps)
       duration: "8:45",
       status: "answered",
       quality: "high",
-      features: ["Recording", "Speakers", "Transcript", "Sentiment", "Intent"],
+      features: ["Recording", "Transcript", "Sentiment", "Intent"],
       audioUrl: "/sample-audio-10.mp3",
       rawData: {
         id: "TXN-010",

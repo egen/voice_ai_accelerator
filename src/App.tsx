@@ -12,8 +12,10 @@ import { TranscriptsView } from "./components/TranscriptsView";
 import { TranscriptViewer } from "./components/TranscriptViewer";
 import { SimpleDialog } from "./components/SimpleDialog";
 import { useState } from "react";
+import { useEffect } from "react";
+import { BotProfilesList } from "./components/BotProfilesList";
 
-type ViewType = "dashboard" | "reports" | "bot-detail" | "transcripts" | "transcript-viewer";
+type ViewType = "dashboard" | "reports" | "bot-detail" | "transcripts" | "transcript-viewer" | "bot-profiles";
 
 interface Bot {
   name: string;
@@ -28,6 +30,12 @@ interface Bot {
 }
 
 export default function App() {
+  // Listen for Bot Profiles tab navigation
+  useEffect(() => {
+    const handler = () => setCurrentView("bot-profiles");
+    window.addEventListener("navigate-bot-profiles", handler);
+    return () => window.removeEventListener("navigate-bot-profiles", handler);
+  }, []);
 
   const [currentView, setCurrentView] = useState<ViewType>("dashboard");
   const [createBotOpen, setCreateBotOpen] = useState(false);
@@ -78,6 +86,22 @@ export default function App() {
     setSelectedTranscript(null);
   };
 
+  function handleBotProfileView(botProfile) {
+    // Convert BotProfile to Bot type
+    const bot: Bot = {
+      name: botProfile.name,
+      status: botProfile.status,
+      industry: botProfile.industry,
+      model: botProfile.model,
+      prompts: '',
+      description: botProfile.description,
+      apiKey: '',
+      maxTokens: 0,
+      temperature: 0.7,
+    };
+    handleBotSelect(bot);
+  }
+
   return (
   <div className="min-h-screen bg-gray-100" style={{ overflow: 'hidden' }}>
     <Header onAnalyticsClick={handleViewReports} onTranscriptsClick={handleViewTranscripts} onDashboardClick={handleBackToDashboard} currentView={currentView} />
@@ -89,26 +113,29 @@ export default function App() {
         />
         <main className="flex-1 p-6 overflow-y-auto" style={{ height: '90vh', marginTop: '56px' }}>
           {currentView === "dashboard" ? (
-          <div className="h-full">
-            <div className="h-1/2 pb-3 flex gap-6">
-              <div className="min-w-0" id="bot-profiles-section" style={{ width: 'calc(60% - 12px)', height: '100%' }}>
-                <BotProfiles onBotSelect={handleBotSelect} />
+            // ...existing code...
+            <div className="h-full">
+              <div className="h-1/2 pb-3 flex gap-6">
+                <div className="min-w-0" id="bot-profiles-section" style={{ width: 'calc(60% - 12px)', height: '100%' }}>
+                  <BotProfiles onBotSelect={handleBotSelect} />
+                </div>
+                <div className="min-w-0" style={{ width: 'calc(40% - 12px)', height: '100%' }}>
+                  <RecentCalls />
+                </div>
               </div>
-              <div className="min-w-0" style={{ width: 'calc(40% - 12px)', height: '100%' }}>
-                <RecentCalls />
+              {/* Spacer between rows */}
+              <div style={{ margin: '25px 0' }}></div>
+              <div className="h-1/2 pt-3 flex gap-6">
+                <div className="min-w-0" id="analytics-section" style={{ width: 'calc(66.67% - 12px)' }}>
+                  <AnalyticsSnapshot />
+                </div>
+                <div className="min-w-0" id="quick-test-section" style={{ width: 'calc(33.33% - 12px)' }}>
+                  <QuickTest />
+                </div>
               </div>
             </div>
-            {/* Spacer between rows */}
-            <div style={{ margin: '25px 0' }}></div>
-            <div className="h-1/2 pt-3 flex gap-6">
-              <div className="min-w-0" id="analytics-section" style={{ width: 'calc(66.67% - 12px)' }}>
-                <AnalyticsSnapshot />
-              </div>
-              <div className="min-w-0" id="quick-test-section" style={{ width: 'calc(33.33% - 12px)' }}>
-                <QuickTest />
-              </div>
-            </div>
-          </div>
+          ) : currentView === "bot-profiles" ? (
+            <BotProfilesList onViewBotDetail={handleBotProfileView} onBack={handleBackToDashboard} />
           ) : currentView === "reports" ? (
             <ReportsView onBack={handleBackToDashboard} />
           ) : currentView === "bot-detail" && selectedBot ? (

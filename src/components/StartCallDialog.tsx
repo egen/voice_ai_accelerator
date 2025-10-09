@@ -62,7 +62,7 @@ export function StartCallDialog({ open, onOpenChange }: StartCallDialogProps) {
                             <SelectItem value="bot-a">Bot A - Healthcare</SelectItem>
                             <SelectItem value="bot-b">Bot B - Finance</SelectItem>
                             <SelectItem value="bot-c">Bot C - Retail</SelectItem>
-                            <SelectItem value="bot-d">Bot D - Technology</SelectItem>
+                            <SelectItem value="bot-d">Bot D - Public Sector</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
