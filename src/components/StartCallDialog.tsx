@@ -13,9 +13,10 @@ interface StartCallDialogProps {
 
 export function StartCallDialog({ open, onOpenChange }: StartCallDialogProps) {
     const [formData, setFormData] = useState({
-        callType: "",
+        interactionType: "",
         selectedBot: "",
-        phoneNumber: ""
+        phoneNumber: "",
+        customerName: ""
     });
 
     const handleStartCall = () => {
@@ -24,9 +25,10 @@ export function StartCallDialog({ open, onOpenChange }: StartCallDialogProps) {
         onOpenChange(false);
         // Reset form
         setFormData({
-            callType: "",
+            interactionType: "",
             selectedBot: "",
-            phoneNumber: ""
+            phoneNumber: "",
+            customerName: ""
         });
     };
 
@@ -34,19 +36,30 @@ export function StartCallDialog({ open, onOpenChange }: StartCallDialogProps) {
         <>
             <div className="space-y-4 py-4">
                 <div className="space-y-2">
-                    <Label htmlFor="callType">Call Type</Label>
+                    <Label htmlFor="interactionType">Select interaction type</Label>
                     <Select
-                        value={formData.callType}
-                        onValueChange={(value: any) => setFormData(prev => ({ ...prev, callType: value }))}
+                        value={formData.interactionType}
+                        onValueChange={(value: any) => setFormData(prev => ({ ...prev, interactionType: value }))}
                     >
                         <SelectTrigger className="border-slate-300">
-                            <SelectValue placeholder="Select call type" />
+                            <SelectValue placeholder="Select interaction type" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="inbound">Inbound</SelectItem>
-                            <SelectItem value="outbound">Outbound</SelectItem>
+                            <SelectItem value="phone-call">Phone Call</SelectItem>
+                            <SelectItem value="daily-room">Daily.co Room</SelectItem>
                         </SelectContent>
                     </Select>
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="customerName">Enter Customer Name</Label>
+                    <Input
+                        id="customerName"
+                        value={formData.customerName}
+                        onChange={(e) => setFormData(prev => ({ ...prev, customerName: e.target.value }))}
+                        placeholder="Customer name"
+                        className="border-slate-300 focus:border-slate-500"
+                    />
                 </div>
 
                 <div className="space-y-2">
