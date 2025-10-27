@@ -9,9 +9,10 @@ import { Phone, PhoneCall } from "lucide-react";
 interface StartCallDialogProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
+    onStartCall?: (data: any) => void;
 }
 
-export function StartCallDialog({ open, onOpenChange }: StartCallDialogProps) {
+export function StartCallDialog({ open, onOpenChange, onStartCall }: StartCallDialogProps) {
     const [formData, setFormData] = useState({
         interactionType: "",
         selectedBot: "",
@@ -20,9 +21,15 @@ export function StartCallDialog({ open, onOpenChange }: StartCallDialogProps) {
     });
 
     const handleStartCall = () => {
-        // Handle call start logic here
-        console.log("Starting call:", formData);
-        onOpenChange(false);
+        if (onStartCall) {
+            // Pass data to live call screen
+            onStartCall(formData);
+        } else {
+            // Fallback behavior
+            console.log("Starting call:", formData);
+            onOpenChange(false);
+        }
+        
         // Reset form
         setFormData({
             interactionType: "",

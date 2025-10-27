@@ -5,17 +5,17 @@ import { RecentCalls } from "./components/RecentCalls";
 import { AnalyticsSnapshot } from "./components/AnalyticsSnapshot";
 import { QuickTest } from "./components/QuickTest";
 import { CreateBotDialog } from "./components/CreateBotDialog";
-import { StartCallDialog } from "./components/StartCallDialog";
 import { ReportsView } from "./components/ReportsView";
 import { BotDetailView } from "./components/BotDetailView";
 import { TranscriptsView } from "./components/TranscriptsView";
 import { TranscriptViewer } from "./components/TranscriptViewer";
+import LiveCallScreen from "./components/LiveCallScreen";
 import { SimpleDialog } from "./components/SimpleDialog";
 import { useState } from "react";
 import { useEffect } from "react";
 import { BotProfilesList } from "./components/BotProfilesList";
 
-type ViewType = "dashboard" | "reports" | "bot-detail" | "transcripts" | "transcript-viewer" | "bot-profiles";
+type ViewType = "dashboard" | "reports" | "bot-detail" | "transcripts" | "transcript-viewer" | "bot-profiles" | "live-call";
 
 interface Bot {
   name: string;
@@ -39,7 +39,6 @@ export default function App() {
 
   const [currentView, setCurrentView] = useState<ViewType>("dashboard");
   const [createBotOpen, setCreateBotOpen] = useState(false);
-  const [startCallOpen, setStartCallOpen] = useState(false);
   const [selectedBot, setSelectedBot] = useState<Bot | null>(null);
   const [selectedTranscript, setSelectedTranscript] = useState<any | null>(null);
 
@@ -48,7 +47,7 @@ export default function App() {
   };
 
   const handleStartCall = () => {
-    setStartCallOpen(true);
+    setCurrentView("live-call");
   };
 
   const handleViewReports = () => {
@@ -86,7 +85,7 @@ export default function App() {
     setSelectedTranscript(null);
   };
 
-  function handleBotProfileView(botProfile) {
+  function handleBotProfileView(botProfile: any) {
     // Convert BotProfile to Bot type
     const bot: Bot = {
       name: botProfile.name,
@@ -101,6 +100,8 @@ export default function App() {
     };
     handleBotSelect(bot);
   }
+
+
 
   return (
   <div className="min-h-screen bg-gray-100" style={{ overflow: 'hidden' }}>
@@ -151,6 +152,10 @@ export default function App() {
               transcript={selectedTranscript}
               onBack={handleBackToTranscripts}
             />
+          ) : currentView === "live-call" ? (
+            <LiveCallScreen 
+              onBack={handleBackToDashboard}
+            />
           ) : null}
         </main>
       </div>
@@ -163,12 +168,7 @@ export default function App() {
         />
       </SimpleDialog>
 
-      <SimpleDialog open={startCallOpen} onClose={() => setStartCallOpen(false)}>
-        <StartCallDialog 
-          open={startCallOpen} 
-          onOpenChange={setStartCallOpen} 
-        />
-      </SimpleDialog>
+
 
       {/* Fixed header styles */}
       <style>{`
