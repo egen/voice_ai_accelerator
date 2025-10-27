@@ -38,7 +38,6 @@ export default function LiveCallScreen({ onBack }: LiveCallScreenProps) {
   const [sentimentData, setSentimentData] = useState<SentimentData[]>([]);
 
   // Ref for auto-scrolling to new messages
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const transcriptionContainerRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to new messages
