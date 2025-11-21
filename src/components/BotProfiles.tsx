@@ -1,6 +1,6 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Bot {
   name: string;
@@ -21,6 +21,20 @@ interface BotProfilesProps {
 export function BotProfiles({ onBotSelect }: BotProfilesProps) {
   const [statusFilter, setStatusFilter] = useState("all");
   const [industryFilter, setIndustryFilter] = useState("all");
+  const [specsResponse, setSpecsResponse] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchSpecs = async () => {
+      try {
+        const res = await fetch("https://voice-ai-accelerator-844712207023.us-central1.run.app/v1/specs/?limit=10&offset=0");
+        console.log(res);
+      } catch (err) {
+        console.error("Error fetching specs:", err);
+      }
+    };
+
+    fetchSpecs();
+  }, []);
   
   const bots: Bot[] = [
     {
